@@ -6,9 +6,20 @@
 //
 
 import SwiftUI
+import SimpleToast
 
 @main
 struct Athena_Call_CenterApp: App {
+    @State private var showCallUI = false
+    
+    private let toastOptions = SimpleToastOptions(
+        alignment: .bottomTrailing,
+        hideAfter: 5,
+        animation: .snappy,
+        modifierType: .slide,
+        dismissOnTap: false
+    )
+    
     var body: some Scene {
         WindowGroup {
             ContentView()

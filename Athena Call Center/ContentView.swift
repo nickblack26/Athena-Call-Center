@@ -1,24 +1,52 @@
-//
-//  ContentView.swift
-//  Athena Call Center
-//
-//  Created by Nick Black on 7/23/24.
-//
-
 import SwiftUI
 
 struct ContentView: View {
+    @State private var selectedTab: StaticTab? = .dashboard
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationSplitView {
+            List(selection: $selectedTab) {
+                ForEach(StaticTab.allCases, id: \.self) { tab in
+                    NavigationLink(tab.rawValue, value: tab)
+                }
+            }
+        } detail: {
+            switch selectedTab {
+            case .dashboard:
+                DashboardView()
+            case .inbox:
+                EmptyView()
+            case .notifications:
+                EmptyView()
+            case .tickets:
+                EmptyView()
+            case .knowledgeBase:
+                EmptyView()
+            case .customers:
+                EmptyView()
+            case .forums:
+                EmptyView()
+            case .reports:
+                EmptyView()
+            case nil:
+                EmptyView()
+            }
         }
-        .padding()
     }
 }
 
 #Preview {
     ContentView()
 }
+
+private enum StaticTab: String, CaseIterable {
+    case dashboard = "Dashboard"
+    case inbox = "Inbox"
+    case notifications = "Notifications"
+    case tickets = "Tickets"
+    case knowledgeBase = "Knowledge Base"
+    case customers = "Customers"
+    case forums = "Forums"
+    case reports = "Reports"
+}
+
